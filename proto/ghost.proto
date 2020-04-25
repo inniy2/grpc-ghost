@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+service ghost{
+	rpc diskcheck(diskRequest)               returns (APIResponse);
+	rpc checkdefinition(definitionRequest)   returns (APIResponse);
+	rpc cutover(Empty)                       returns (APIResponse);
+	rpc dryrun(ghostRequest)                 returns (APIResponse);
+	rpc execute(ghostRequest)                returns (stream APIMessage);
+	rpc executeNohup(ghostRequest)           returns (APIResponse);
+	rpc interactive(interactiveRequest)      returns (APIResponse);
+}
+
+message Empty{
+}
+
+message APIResponse{
+	string responsemessage = 1;
+	int32 responsecode = 2;
+}
+
+message APIMessage{
+	repeated string responsemessage = 1;
+}
+
+message diskRequest{
+	string dir = 1;
+}
+
+message definitionRequest{
+	string schemaname = 1;
+	string tablename = 2;
+}
+
+message ghostRequest{
+	string schemaname = 1;
+	string tablename = 2;
+    string statement = 3;
+}
+
+message interactiveRequest{
+	string schemaname = 1;
+	string tablename = 2;
+    string ghostcommand = 3;
+}
+
+
