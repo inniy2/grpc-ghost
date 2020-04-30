@@ -51,8 +51,8 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         schemaname = request.schemaname
         tablename  = request.tablename
         statement  = request.statement
-        binary      = "/Users/baesangsun/bin/gh-ost"
-        conf       = "/Users/baesangsun/.my.cnf"
+        binary      = "/usr/bin/gh-ost"
+        conf       = "/etc/mysql/debian.cnf"
         print("schema name : %s , table name: %s, statement %s" % (schemaname, tablename, statement))
         print("ghost: %s , conf: %s" % (binary, conf))
         args = [
@@ -64,18 +64,19 @@ class Listener(ghost_pb2_grpc.ghostServicer):
 				"--conf="+conf,                              # 5
 				"--host=127.0.0.1",                          # 6
 				"--allow-on-master",                         # 7  *
-				"--database="+schemaname,                    # 8
-				"--table="+tablename,                        # 9
-				"--alter="+statement,                        # 10
-				"--switch-to-rbr",                           # 11
-				"--cut-over=default",                        # 12
-				"--exact-rowcount",                          # 13
-				"--concurrent-rowcount",                     # 14
-				"--default-retries=120",                     # 15
-				"--timestamp-old-table",                     # 16
-                "--panic-flag-file=/tmp/ghost.panic.flag",   # 17
-                "--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", # 18
-				"--verbose"                                  # 19
+                "--approve-renamed-columns",                 # 8  *
+				"--database="+schemaname,                    # 9
+				"--table="+tablename,                        # 10
+				"--alter="+statement,                        # 11
+				"--switch-to-rbr",                           # 12
+				"--cut-over=default",                        # 13
+				"--exact-rowcount",                          # 14
+				"--concurrent-rowcount",                     # 15
+				"--default-retries=120",                     # 16
+				"--timestamp-old-table",                     # 17
+                "--panic-flag-file=/tmp/ghost.panic.flag",   # 18
+                "--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", # 19
+				"--verbose"                                  # 20
         ]
         ghost = subprocess.run(args,stdout=PIPE,stderr=PIPE, universal_newlines=True)
         _ghost_stdout = ghost.stdout
@@ -89,8 +90,8 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         schemaname = request.schemaname
         tablename  = request.tablename
         statement  = request.statement
-        binary      = "/Users/baesangsun/bin/gh-ost"
-        conf       = "/Users/baesangsun/.my.cnf"
+        binary      = "/usr/bin/gh-ost"
+        conf       = "/etc/mysql/debian.cnf"
         print("schema name : %s , table name: %s, statement %s" % (schemaname, tablename, statement))
         print("ghost: %s , conf: %s" % (binary, conf))
         args = [
@@ -102,16 +103,17 @@ class Listener(ghost_pb2_grpc.ghostServicer):
 				"--conf="+conf,                              # 5
 				"--host=127.0.0.1",                          # 6
 				"--allow-on-master",                         # 7  *
-				"--database="+schemaname,                    # 8
-				"--table="+tablename,                        # 9
-				"--alter="+statement,                        # 10
-				"--switch-to-rbr",                           # 11
-				"--cut-over=default",                        # 12
-				"--exact-rowcount",                          # 13
-				"--concurrent-rowcount",                     # 14
-				"--default-retries=120",                     # 15
-				"--timestamp-old-table",                     # 16
-                "--panic-flag-file=/tmp/ghost.panic.flag",   # 17
+                "--approve-renamed-columns",                 # 8  *
+				"--database="+schemaname,                    # 9
+				"--table="+tablename,                        # 10
+				"--alter="+statement,                        # 11
+				"--switch-to-rbr",                           # 12
+				"--cut-over=default",                        # 13
+				"--exact-rowcount",                          # 14
+				"--concurrent-rowcount",                     # 15
+				"--default-retries=120",                     # 16
+				"--timestamp-old-table",                     # 17
+                "--panic-flag-file=/tmp/ghost.panic.flag",   # 18
                 "--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", # 19
 				"--verbose",                                 # 20
 				"--execute"                                  # 21
@@ -132,8 +134,8 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         schemaname = request.schemaname
         tablename  = request.tablename
         statement  = request.statement
-        binary     = "/Users/baesangsun/bin/gh-ost"
-        conf       = "/Users/baesangsun/.my.cnf"
+        binary     = "/usr/bin/gh-ost"
+        conf       = "/etc/mysql/debian.cnf"
         print("schema name : %s , table name: %s, statement %s" % (schemaname, tablename, statement))
         print("ghost: %s , conf: %s" % (binary, conf))
         args = [
@@ -146,16 +148,17 @@ class Listener(ghost_pb2_grpc.ghostServicer):
 				"--conf="+conf,                              # 5
 				"--host=127.0.0.1",                          # 6
 				"--allow-on-master",                         # 7  *
-				"--database="+schemaname,                    # 8
-				"--table="+tablename,                        # 9
-				"--alter="+statement,                        # 10
-				"--switch-to-rbr",                           # 11
-				"--cut-over=default",                        # 12
-				"--exact-rowcount",                          # 13
-				"--concurrent-rowcount",                     # 14
-				"--default-retries=120",                     # 15
-				"--timestamp-old-table",                     # 16
-                "--panic-flag-file=/tmp/ghost.panic.flag",   # 17
+                "--approve-renamed-columns",                 # 8  *
+				"--database="+schemaname,                    # 9
+				"--table="+tablename,                        # 10
+				"--alter="+statement,                        # 11
+				"--switch-to-rbr",                           # 12
+				"--cut-over=default",                        # 13
+				"--exact-rowcount",                          # 14
+				"--concurrent-rowcount",                     # 15
+				"--default-retries=120",                     # 16
+				"--timestamp-old-table",                     # 17
+                "--panic-flag-file=/tmp/ghost.panic.flag",   # 18
                 "--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", # 19
 				"--verbose",                                 # 20
 				"--execute"                                  # 21
