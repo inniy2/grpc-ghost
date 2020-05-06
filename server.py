@@ -53,6 +53,9 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         statement  = request.statement
         binary      = "/usr/bin/gh-ost"
         conf       = "/etc/mysql/debian.cnf"
+        if os.path.exists("/tmp/gh-ost.%s.%s.sock" % (schemaname, tablename)):
+            return ghost_pb2.APIResponse(responsemessage="Ghost socket file already exists.",
+                                        responsecode=1)
         print("schema name : %s , table name: %s, statement %s" % (schemaname, tablename, statement))
         print("ghost: %s , conf: %s" % (binary, conf))
         args = [
@@ -76,7 +79,8 @@ class Listener(ghost_pb2_grpc.ghostServicer):
 				"--timestamp-old-table",                     # 17
                 "--panic-flag-file=/tmp/ghost.panic.flag",   # 18
                 "--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", # 19
-				"--verbose"                                  # 20
+                "--initially-drop-ghost-table",              # 20 *
+				"--verbose"                                  # 21
         ]
         ghost = subprocess.run(args,stdout=PIPE,stderr=PIPE, universal_newlines=True)
         _ghost_stdout = ghost.stdout
@@ -92,6 +96,9 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         statement  = request.statement
         binary      = "/usr/bin/gh-ost"
         conf       = "/etc/mysql/debian.cnf"
+        if os.path.exists("/tmp/gh-ost.%s.%s.sock" % (schemaname, tablename)):
+            return ghost_pb2.APIResponse(responsemessage="Ghost socket file already exists.",
+                                        responsecode=1)
         print("schema name : %s , table name: %s, statement %s" % (schemaname, tablename, statement))
         print("ghost: %s , conf: %s" % (binary, conf))
         args = [
@@ -115,8 +122,9 @@ class Listener(ghost_pb2_grpc.ghostServicer):
 				"--timestamp-old-table",                     # 17
                 "--panic-flag-file=/tmp/ghost.panic.flag",   # 18
                 "--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", # 19
-				"--verbose",                                 # 20
-				"--execute"                                  # 21
+                "--initially-drop-ghost-table",              # 20 *
+				"--verbose",                                 # 21
+				"--execute"                                  # 22
         ]
         with subprocess.Popen(args, bufsize=-1, stdout=PIPE, stderr=PIPE, universal_newlines=True) as ghost:
             while True:
@@ -136,6 +144,9 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         statement  = request.statement
         binary     = "/usr/bin/gh-ost"
         conf       = "/etc/mysql/debian.cnf"
+        if os.path.exists("/tmp/gh-ost.%s.%s.sock" % (schemaname, tablename)):
+            return ghost_pb2.APIResponse(responsemessage="Ghost socket file already exists.",
+                                        responsecode=1)
         print("schema name : %s , table name: %s, statement %s" % (schemaname, tablename, statement))
         print("ghost: %s , conf: %s" % (binary, conf))
         args = [
@@ -160,8 +171,9 @@ class Listener(ghost_pb2_grpc.ghostServicer):
 				"--timestamp-old-table",                     # 17
                 "--panic-flag-file=/tmp/ghost.panic.flag",   # 18
                 "--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", # 19
-				"--verbose",                                 # 20
-				"--execute"                                  # 21
+                "--initially-drop-ghost-table",              # 20 *
+				"--verbose",                                 # 21
+				"--execute"                                  # 22
         ]
         subprocess.Popen(args)
         return ghost_pb2.APIResponse(responsemessage="Executing",
@@ -174,6 +186,31 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         ghost = subprocess.run(args,stdout=PIPE,stderr=PIPE, universal_newlines=True)
         _ghost_stdout = ghost.stdout
         _ghost_stderr = ghost.stderr
+        print("Cut Over : rm -rf /tmp/ghost.postpone.flag")
+        print("ghost.stdout is %s " % (_ghost_stdout))
+        print("ghost.stderr is %s " % (_ghost_stderr))
+        return ghost_pb2.APIResponse(responsemessage=_ghost_stdout+'\n'+_ghost_stderr,
+                                        responsecode=0)
+
+    def putpanicflag(self, request, context):
+        args = ["touch",
+                "/tmp/ghost.panic.flag"
+        ]
+        ghost = subprocess.run(args,stdout=PIPE,stderr=PIPE, universal_newlines=True)
+        _ghost_stdout = ghost.stdout
+        _ghost_stderr = ghost.stderr
+        print("Put Panic Flag : touch /tmp/ghost.panic.flag")
+        print("ghost.stdout is %s " % (_ghost_stdout))
+        print("ghost.stderr is %s " % (_ghost_stderr))
+        return ghost_pb2.APIResponse(responsemessage=_ghost_stdout+'\n'+_ghost_stderr,
+                                        responsecode=0)
+
+    def cleanup(self, request, context):
+        args = 'rm -rf /tmp/ghost.panic.flag /tmp/gh-ost.*.*.sock /tmp/ghost.postpone.flag'
+        ghost = subprocess.run(args,stdout=PIPE,stderr=PIPE, universal_newlines=True, shell=True)
+        _ghost_stdout = ghost.stdout
+        _ghost_stderr = ghost.stderr
+        print("Clean up : %s" % (args))
         print("ghost.stdout is %s " % (_ghost_stdout))
         print("ghost.stderr is %s " % (_ghost_stderr))
         return ghost_pb2.APIResponse(responsemessage=_ghost_stdout+'\n'+_ghost_stderr,
@@ -183,11 +220,11 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         schemaname = request.schemaname
         tablename  = request.tablename
         ghostcmd   = request.ghostcommand
-        arg1 = ["echo", ghostcmd] 
-        arg2 = ["nc","-U", "/tmp/gh-ost."+schemaname+"."+tablename+".sock"] 
+        arg1 = ["echo", ghostcmd]
+        arg2 = ["nc","-U", "/tmp/gh-ost."+schemaname+"."+tablename+".sock"]
         echo = subprocess.Popen(arg1, stdout=PIPE)
         ghost = subprocess.Popen(arg2, stdin=echo.stdout, stdout=PIPE, universal_newlines=True)
-        echo.stdout.close() 
+        echo.stdout.close()
         message = ""
         while True:
             _ghost_stdout = ghost.stdout.readline()

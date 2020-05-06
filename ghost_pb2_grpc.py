@@ -28,6 +28,16 @@ class ghostStub(object):
                 request_serializer=ghost__pb2.Empty.SerializeToString,
                 response_deserializer=ghost__pb2.APIResponse.FromString,
                 )
+        self.putpanicflag = channel.unary_unary(
+                '/ghost/putpanicflag',
+                request_serializer=ghost__pb2.Empty.SerializeToString,
+                response_deserializer=ghost__pb2.APIResponse.FromString,
+                )
+        self.cleanup = channel.unary_unary(
+                '/ghost/cleanup',
+                request_serializer=ghost__pb2.Empty.SerializeToString,
+                response_deserializer=ghost__pb2.APIResponse.FromString,
+                )
         self.dryrun = channel.unary_unary(
                 '/ghost/dryrun',
                 request_serializer=ghost__pb2.ghostRequest.SerializeToString,
@@ -66,6 +76,18 @@ class ghostServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def cutover(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def putpanicflag(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def cleanup(self, request, context):
         """Missing associated documentation comment in .proto file"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -110,6 +132,16 @@ def add_ghostServicer_to_server(servicer, server):
             ),
             'cutover': grpc.unary_unary_rpc_method_handler(
                     servicer.cutover,
+                    request_deserializer=ghost__pb2.Empty.FromString,
+                    response_serializer=ghost__pb2.APIResponse.SerializeToString,
+            ),
+            'putpanicflag': grpc.unary_unary_rpc_method_handler(
+                    servicer.putpanicflag,
+                    request_deserializer=ghost__pb2.Empty.FromString,
+                    response_serializer=ghost__pb2.APIResponse.SerializeToString,
+            ),
+            'cleanup': grpc.unary_unary_rpc_method_handler(
+                    servicer.cleanup,
                     request_deserializer=ghost__pb2.Empty.FromString,
                     response_serializer=ghost__pb2.APIResponse.SerializeToString,
             ),
@@ -186,6 +218,38 @@ class ghost(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ghost/cutover',
+            ghost__pb2.Empty.SerializeToString,
+            ghost__pb2.APIResponse.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def putpanicflag(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ghost/putpanicflag',
+            ghost__pb2.Empty.SerializeToString,
+            ghost__pb2.APIResponse.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def cleanup(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ghost/cleanup',
             ghost__pb2.Empty.SerializeToString,
             ghost__pb2.APIResponse.FromString,
             options, channel_credentials,

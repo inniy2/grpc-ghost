@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x0bghost.proto\"\x07\n\x05\x45mpty\"<\n\x0b\x41PIResponse\x12\x17\n\x0fresponsemessage\x18\x01 \x01(\t\x12\x14\n\x0cresponsecode\x18\x02 \x01(\x05\"%\n\nAPIMessage\x12\x17\n\x0fresponsemessage\x18\x01 \x03(\t\"\x1a\n\x0b\x64iskRequest\x12\x0b\n\x03\x64ir\x18\x01 \x01(\t\":\n\x11\x64\x65\x66initionRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\"H\n\x0cghostRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x11\n\tstatement\x18\x03 \x01(\t\"Q\n\x12interactiveRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x14\n\x0cghostcommand\x18\x03 \x01(\t2\xb5\x02\n\x05ghost\x12\'\n\tdiskcheck\x12\x0c.diskRequest\x1a\x0c.APIResponse\x12\x33\n\x0f\x63heckdefinition\x12\x12.definitionRequest\x1a\x0c.APIResponse\x12\x1f\n\x07\x63utover\x12\x06.Empty\x1a\x0c.APIResponse\x12%\n\x06\x64ryrun\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\'\n\x07\x65xecute\x12\r.ghostRequest\x1a\x0b.APIMessage0\x01\x12+\n\x0c\x65xecuteNohup\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\x30\n\x0binteractive\x12\x13.interactiveRequest\x1a\x0c.APIResponseb\x06proto3'
+  serialized_pb=b'\n\x0bghost.proto\"\x07\n\x05\x45mpty\"<\n\x0b\x41PIResponse\x12\x17\n\x0fresponsemessage\x18\x01 \x01(\t\x12\x14\n\x0cresponsecode\x18\x02 \x01(\x05\"%\n\nAPIMessage\x12\x17\n\x0fresponsemessage\x18\x01 \x03(\t\"\x1a\n\x0b\x64iskRequest\x12\x0b\n\x03\x64ir\x18\x01 \x01(\t\":\n\x11\x64\x65\x66initionRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\"H\n\x0cghostRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x11\n\tstatement\x18\x03 \x01(\t\"Q\n\x12interactiveRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x14\n\x0cghostcommand\x18\x03 \x01(\t2\xfc\x02\n\x05ghost\x12\'\n\tdiskcheck\x12\x0c.diskRequest\x1a\x0c.APIResponse\x12\x33\n\x0f\x63heckdefinition\x12\x12.definitionRequest\x1a\x0c.APIResponse\x12\x1f\n\x07\x63utover\x12\x06.Empty\x1a\x0c.APIResponse\x12$\n\x0cputpanicflag\x12\x06.Empty\x1a\x0c.APIResponse\x12\x1f\n\x07\x63leanup\x12\x06.Empty\x1a\x0c.APIResponse\x12%\n\x06\x64ryrun\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\'\n\x07\x65xecute\x12\r.ghostRequest\x1a\x0b.APIMessage0\x01\x12+\n\x0c\x65xecuteNohup\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\x30\n\x0binteractive\x12\x13.interactiveRequest\x1a\x0c.APIResponseb\x06proto3'
 )
 
 
@@ -342,7 +342,7 @@ _GHOST = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   serialized_start=371,
-  serialized_end=680,
+  serialized_end=751,
   methods=[
   _descriptor.MethodDescriptor(
     name='diskcheck',
@@ -372,9 +372,27 @@ _GHOST = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
+    name='putpanicflag',
+    full_name='ghost.putpanicflag',
+    index=3,
+    containing_service=None,
+    input_type=_EMPTY,
+    output_type=_APIRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='cleanup',
+    full_name='ghost.cleanup',
+    index=4,
+    containing_service=None,
+    input_type=_EMPTY,
+    output_type=_APIRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
     name='dryrun',
     full_name='ghost.dryrun',
-    index=3,
+    index=5,
     containing_service=None,
     input_type=_GHOSTREQUEST,
     output_type=_APIRESPONSE,
@@ -383,7 +401,7 @@ _GHOST = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='execute',
     full_name='ghost.execute',
-    index=4,
+    index=6,
     containing_service=None,
     input_type=_GHOSTREQUEST,
     output_type=_APIMESSAGE,
@@ -392,7 +410,7 @@ _GHOST = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='executeNohup',
     full_name='ghost.executeNohup',
-    index=5,
+    index=7,
     containing_service=None,
     input_type=_GHOSTREQUEST,
     output_type=_APIRESPONSE,
@@ -401,7 +419,7 @@ _GHOST = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='interactive',
     full_name='ghost.interactive',
-    index=6,
+    index=8,
     containing_service=None,
     input_type=_INTERACTIVEREQUEST,
     output_type=_APIRESPONSE,

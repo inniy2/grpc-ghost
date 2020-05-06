@@ -4,6 +4,8 @@ service ghost{
 	rpc diskcheck(diskRequest)               returns (APIResponse);
 	rpc checkdefinition(definitionRequest)   returns (APIResponse);
 	rpc cutover(Empty)                       returns (APIResponse);
+	rpc putpanicflag(Empty)					 returns (APIResponse);
+	rpc cleanup(Empty)					     returns (APIResponse);
 	rpc dryrun(ghostRequest)                 returns (APIResponse);
 	rpc execute(ghostRequest)                returns (stream APIMessage);
 	rpc executeNohup(ghostRequest)           returns (APIResponse);
