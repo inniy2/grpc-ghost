@@ -9,6 +9,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import subprocess
 from subprocess import Popen, PIPE
+import configparser
 
 class Listener(ghost_pb2_grpc.ghostServicer):
     def __init__(self, *args, **kwargs):
@@ -26,8 +27,11 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         schemaname = request.schemaname
         tablename  = request.tablename
         print("schema name : %s , table name: %s" % (schemaname, tablename))
+        config = configparser.ConfigParser()
+        config.sections()
+        config.read('config.ini')
         try:
-            cnx = mysql.connector.connect(user='root', password='12345678',
+            cnx = mysql.connector.connect(user=config['DEFAULT']['user'], password=config['DEFAULT']['password'],
                                   host='127.0.0.1',
                                   database=schemaname)
             cursor = cnx.cursor()
@@ -252,4 +256,7 @@ def serve(port):
         server.stop(0)
 
 if __name__ == "__main__":
-    serve("9090")
+    config = configparser.ConfigParser()
+    config.sections()
+    config.read('config.ini')
+    serve(config['DEFAULT']['port'])

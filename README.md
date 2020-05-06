@@ -20,4 +20,6 @@ How to build in ubuntu
 
 `pip install mysql-connector-python`
 
+`pip install configparser`
+
 `python -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/ghost.proto`
