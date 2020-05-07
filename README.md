@@ -8,8 +8,6 @@ How to build in ubuntu
 
 `sudo apt install virtualenv`
 
-`pip install virtualenv --user`
-
 `virtualenv venv --python=python3.6`
 
 `source venv/bin/activate`

@@ -242,11 +242,15 @@ class Listener(ghost_pb2_grpc.ghostServicer):
                                         responsecode=0)
 
 def serve(port):
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+    config = configparser.ConfigParser()
+    config.sections()
+    config.read('config.ini')
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=int(config['DEFAULT']['max_workers'])))
     ghost_pb2_grpc.add_ghostServicer_to_server(Listener(),server)
     server.add_insecure_port("[::]:"+port)
     server.start()
     print("port : %s" % (port))
+    print("max_workers : %s" % (config['DEFAULT']['max_workers']))
 
     try:
         while True:
