@@ -1,0 +1,22 @@
+[Unit]
+Description=grpc-ghost
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+PIDFile=/run/grpc-ghost/grpc-ghost.pid
+ExecStart=/usr/bin/python3 /opt/grpc-ghost/server.py
+StandardOutput=file:/var/log/grpc-ghost.log
+StandardError=file:/var/log/grpc-ghost.log
+SyslogIdentifier=grpc-ghost
+Restart=always
+TimeoutStartSec=10
+RestartSec=10
+
+
+
+[Install]
+WantedBy=multi-user.target

@@ -29,7 +29,7 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         print("schema name : %s , table name: %s" % (schemaname, tablename))
         config = configparser.ConfigParser()
         config.sections()
-        config.read('config.ini')
+        config.read('/etc/grpc-ghost/config.ini')
         try:
             cnx = mysql.connector.connect(user=config['DEFAULT']['user'], password=config['DEFAULT']['password'],
                                   host='127.0.0.1',
@@ -244,7 +244,7 @@ class Listener(ghost_pb2_grpc.ghostServicer):
 def serve(port):
     config = configparser.ConfigParser()
     config.sections()
-    config.read('config.ini')
+    config.read('/etc/grpc-ghost/config.ini')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=int(config['DEFAULT']['max_workers'])))
     ghost_pb2_grpc.add_ghostServicer_to_server(Listener(),server)
     server.add_insecure_port("[::]:"+port)
@@ -262,5 +262,5 @@ def serve(port):
 if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.sections()
-    config.read('config.ini')
+    config.read('/etc/grpc-ghost/config.ini')
     serve(config['DEFAULT']['port'])

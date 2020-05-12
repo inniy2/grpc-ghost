@@ -1,0 +1,73 @@
+---
+- name: set_fact
+  set_fact:
+    user: "{{ user }}"
+    password: "{{ password }}"
+    port: "{{ port }}"
+    max_workers: "{{ max_workers }}"
+
+- name: Install apt packages
+  apt:
+    pkg:
+    - python3-pip
+    - gh-ost
+    state: present
+
+- pip:
+    name: "{{ item.name }}"
+    executable: pip3
+  with_items:
+    - { name: grpcio }
+    - { name: mysql-connector-python }
+    - { name: configparser }
+  environment:
+    HTTP_PROXY: 'http://proxy.internal:8080/'
+    HTTPS_PROXY: 'http://proxy.internal:8080/'
+
+- name: Create directories
+  file:
+    path: "{{ item.path }}"
+    state: "{{ item.state }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+  with_items:
+    - { path: '/etc/grpc-ghost',          mode: '0755' , state: 'directory' }
+    - { path: '/run/grpc-ghost',          mode: '0755' , state: 'directory' }
+    - { path: '/opt/grpc-ghost',          mode: '0755' , state: 'directory' }
+    - { path: '/var/log/gprc-ghost.log',  mode: '0644' , state: 'touch'     }
+
+- name: Create files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+  with_items:
+    - { src: '/home/sangsun/git/grpc-ghost/ghost_pb2_grpc.py', mode: '0644', dest: '/opt/grpc-ghost/ghost_pb2_grpc.py'       }
+    - { src: '/home/sangsun/git/grpc-ghost/ghost_pb2.py',      mode: '0644', dest: '/opt/grpc-ghost/ghost_pb2.py'            }
+    - { src: '/home/sangsun/git/grpc-ghost/server.py',         mode: '0644', dest: '/opt/grpc-ghost/server.py'               }
+    - { src: 'grpc-ghost.service',                             mode: '0644', dest: '/lib/systemd/system/grpc-ghost.service'  }
+
+- name: Create templates
+  vars:
+    user: "{{ user }}"
+    password: "{{ password }}"
+    port: "{{ port }}"
+    max_workers: "{{ max_workers }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+  with_items:
+    - { src: 'config.ini.j2', mode: '0644', dest: '/etc/grpc-ghost/config.ini' }
+
+- name: restart service
+  systemd:
+    name: grpc-ghost
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
