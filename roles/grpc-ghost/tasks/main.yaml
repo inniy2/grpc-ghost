@@ -35,7 +35,7 @@
     - { path: '/etc/grpc-ghost',          mode: '0755' , state: 'directory' }
     - { path: '/run/grpc-ghost',          mode: '0755' , state: 'directory' }
     - { path: '/opt/grpc-ghost',          mode: '0755' , state: 'directory' }
-    - { path: '/var/log/gprc-ghost.log',  mode: '0644' , state: 'touch'     }
+    - { path: '/var/log/grpc-ghost.log',  mode: '0644' , state: 'touch'     }
 
 - name: Create files
   copy:
