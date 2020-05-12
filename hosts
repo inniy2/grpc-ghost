@@ -1,3 +1,0 @@
-[all]
-alter-test-d2.sqldb     user=debian-sys-maint    password=hBVmWTJwnmoQU1VO   port=9090  max_workers=2
-alter-test-d4.sqldb     user=debian-sys-maint    password=hBVmWTJwnmoQU1VO   port=9090  max_workers=2
