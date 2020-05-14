@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x0bghost.proto\"\x07\n\x05\x45mpty\"<\n\x0b\x41PIResponse\x12\x17\n\x0fresponsemessage\x18\x01 \x01(\t\x12\x14\n\x0cresponsecode\x18\x02 \x01(\x05\"%\n\nAPIMessage\x12\x17\n\x0fresponsemessage\x18\x01 \x03(\t\"\x1a\n\x0b\x64iskRequest\x12\x0b\n\x03\x64ir\x18\x01 \x01(\t\":\n\x11\x64\x65\x66initionRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\"H\n\x0cghostRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x11\n\tstatement\x18\x03 \x01(\t\"Q\n\x12interactiveRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x14\n\x0cghostcommand\x18\x03 \x01(\t2\xfc\x02\n\x05ghost\x12\'\n\tdiskcheck\x12\x0c.diskRequest\x1a\x0c.APIResponse\x12\x33\n\x0f\x63heckdefinition\x12\x12.definitionRequest\x1a\x0c.APIResponse\x12\x1f\n\x07\x63utover\x12\x06.Empty\x1a\x0c.APIResponse\x12$\n\x0cputpanicflag\x12\x06.Empty\x1a\x0c.APIResponse\x12\x1f\n\x07\x63leanup\x12\x06.Empty\x1a\x0c.APIResponse\x12%\n\x06\x64ryrun\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\'\n\x07\x65xecute\x12\r.ghostRequest\x1a\x0b.APIMessage0\x01\x12+\n\x0c\x65xecuteNohup\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\x30\n\x0binteractive\x12\x13.interactiveRequest\x1a\x0c.APIResponseb\x06proto3'
+  serialized_pb=b'\n\x0bghost.proto\"\x07\n\x05\x45mpty\"<\n\x0b\x41PIResponse\x12\x17\n\x0fresponsemessage\x18\x01 \x01(\t\x12\x14\n\x0cresponsecode\x18\x02 \x01(\x05\"%\n\nAPIMessage\x12\x17\n\x0fresponsemessage\x18\x01 \x03(\t\"\x1a\n\x0b\x64iskRequest\x12\x0b\n\x03\x64ir\x18\x01 \x01(\t\":\n\x11\x64\x65\x66initionRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\"@\n\nibdRequest\x12\x0b\n\x03\x64ir\x18\x01 \x01(\t\x12\x12\n\nschemaname\x18\x02 \x01(\t\x12\x11\n\ttablename\x18\x03 \x01(\t\"H\n\x0cghostRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x11\n\tstatement\x18\x03 \x01(\t\"Q\n\x12interactiveRequest\x12\x12\n\nschemaname\x18\x01 \x01(\t\x12\x11\n\ttablename\x18\x02 \x01(\t\x12\x14\n\x0cghostcommand\x18\x03 \x01(\t2\xd0\x03\n\x05ghost\x12\'\n\tdiskcheck\x12\x0c.diskRequest\x1a\x0c.APIResponse\x12\x33\n\x0f\x63heckdefinition\x12\x12.definitionRequest\x1a\x0c.APIResponse\x12\x1f\n\x07\x63utover\x12\x06.Empty\x1a\x0c.APIResponse\x12$\n\x0cputpanicflag\x12\x06.Empty\x1a\x0c.APIResponse\x12\x1f\n\x07\x63leanup\x12\x06.Empty\x1a\x0c.APIResponse\x12%\n\x06\x64ryrun\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\'\n\x07\x65xecute\x12\r.ghostRequest\x1a\x0b.APIMessage0\x01\x12+\n\x0c\x65xecuteNohup\x12\r.ghostRequest\x1a\x0c.APIResponse\x12\x30\n\x0binteractive\x12\x13.interactiveRequest\x1a\x0c.APIResponse\x12,\n\x08rowcount\x12\x12.definitionRequest\x1a\x0c.APIResponse\x12$\n\x07ibdsize\x12\x0b.ibdRequest\x1a\x0c.APIResponseb\x06proto3'
 )
 
 
@@ -186,6 +186,51 @@ _DEFINITIONREQUEST = _descriptor.Descriptor(
 )
 
 
+_IBDREQUEST = _descriptor.Descriptor(
+  name='ibdRequest',
+  full_name='ibdRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='dir', full_name='ibdRequest.dir', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='schemaname', full_name='ibdRequest.schemaname', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='tablename', full_name='ibdRequest.tablename', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=213,
+  serialized_end=277,
+)
+
+
 _GHOSTREQUEST = _descriptor.Descriptor(
   name='ghostRequest',
   full_name='ghostRequest',
@@ -226,8 +271,8 @@ _GHOSTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=213,
-  serialized_end=285,
+  serialized_start=279,
+  serialized_end=351,
 )
 
 
@@ -271,8 +316,8 @@ _INTERACTIVEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=287,
-  serialized_end=368,
+  serialized_start=353,
+  serialized_end=434,
 )
 
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
@@ -280,6 +325,7 @@ DESCRIPTOR.message_types_by_name['APIResponse'] = _APIRESPONSE
 DESCRIPTOR.message_types_by_name['APIMessage'] = _APIMESSAGE
 DESCRIPTOR.message_types_by_name['diskRequest'] = _DISKREQUEST
 DESCRIPTOR.message_types_by_name['definitionRequest'] = _DEFINITIONREQUEST
+DESCRIPTOR.message_types_by_name['ibdRequest'] = _IBDREQUEST
 DESCRIPTOR.message_types_by_name['ghostRequest'] = _GHOSTREQUEST
 DESCRIPTOR.message_types_by_name['interactiveRequest'] = _INTERACTIVEREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -319,6 +365,13 @@ definitionRequest = _reflection.GeneratedProtocolMessageType('definitionRequest'
   })
 _sym_db.RegisterMessage(definitionRequest)
 
+ibdRequest = _reflection.GeneratedProtocolMessageType('ibdRequest', (_message.Message,), {
+  'DESCRIPTOR' : _IBDREQUEST,
+  '__module__' : 'ghost_pb2'
+  # @@protoc_insertion_point(class_scope:ibdRequest)
+  })
+_sym_db.RegisterMessage(ibdRequest)
+
 ghostRequest = _reflection.GeneratedProtocolMessageType('ghostRequest', (_message.Message,), {
   'DESCRIPTOR' : _GHOSTREQUEST,
   '__module__' : 'ghost_pb2'
@@ -341,8 +394,8 @@ _GHOST = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=371,
-  serialized_end=751,
+  serialized_start=437,
+  serialized_end=901,
   methods=[
   _descriptor.MethodDescriptor(
     name='diskcheck',
@@ -422,6 +475,24 @@ _GHOST = _descriptor.ServiceDescriptor(
     index=8,
     containing_service=None,
     input_type=_INTERACTIVEREQUEST,
+    output_type=_APIRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='rowcount',
+    full_name='ghost.rowcount',
+    index=9,
+    containing_service=None,
+    input_type=_DEFINITIONREQUEST,
+    output_type=_APIRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ibdsize',
+    full_name='ghost.ibdsize',
+    index=10,
+    containing_service=None,
+    input_type=_IBDREQUEST,
     output_type=_APIRESPONSE,
     serialized_options=None,
   ),

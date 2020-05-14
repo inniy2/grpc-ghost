@@ -58,6 +58,16 @@ class ghostStub(object):
                 request_serializer=ghost__pb2.interactiveRequest.SerializeToString,
                 response_deserializer=ghost__pb2.APIResponse.FromString,
                 )
+        self.rowcount = channel.unary_unary(
+                '/ghost/rowcount',
+                request_serializer=ghost__pb2.definitionRequest.SerializeToString,
+                response_deserializer=ghost__pb2.APIResponse.FromString,
+                )
+        self.ibdsize = channel.unary_unary(
+                '/ghost/ibdsize',
+                request_serializer=ghost__pb2.ibdRequest.SerializeToString,
+                response_deserializer=ghost__pb2.APIResponse.FromString,
+                )
 
 
 class ghostServicer(object):
@@ -117,6 +127,18 @@ class ghostServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def rowcount(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ibdsize(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ghostServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -163,6 +185,16 @@ def add_ghostServicer_to_server(servicer, server):
             'interactive': grpc.unary_unary_rpc_method_handler(
                     servicer.interactive,
                     request_deserializer=ghost__pb2.interactiveRequest.FromString,
+                    response_serializer=ghost__pb2.APIResponse.SerializeToString,
+            ),
+            'rowcount': grpc.unary_unary_rpc_method_handler(
+                    servicer.rowcount,
+                    request_deserializer=ghost__pb2.definitionRequest.FromString,
+                    response_serializer=ghost__pb2.APIResponse.SerializeToString,
+            ),
+            'ibdsize': grpc.unary_unary_rpc_method_handler(
+                    servicer.ibdsize,
+                    request_deserializer=ghost__pb2.ibdRequest.FromString,
                     response_serializer=ghost__pb2.APIResponse.SerializeToString,
             ),
     }
@@ -315,6 +347,38 @@ class ghost(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ghost/interactive',
             ghost__pb2.interactiveRequest.SerializeToString,
+            ghost__pb2.APIResponse.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def rowcount(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ghost/rowcount',
+            ghost__pb2.definitionRequest.SerializeToString,
+            ghost__pb2.APIResponse.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ibdsize(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ghost/ibdsize',
+            ghost__pb2.ibdRequest.SerializeToString,
             ghost__pb2.APIResponse.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)

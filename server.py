@@ -22,6 +22,15 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         print("dir : %s, free size : %s" % (rdir, space))
         return ghost_pb2.APIResponse(responsemessage=space,
                                         responsecode=0)
+    
+    def ibdsize(self, request, context):
+        rdir = request.dir
+        schemaname = request.schemaname
+        tablename  = request.tablename
+        space = str(int(os.path.getsize(rdir+"/"+schemaname+"/"+tablename+".ibd")/ 1024 / 1024 / 1024))+"G"
+        print("file : %s, file size : %s" % (rdir+"/"+schemaname+"/"+tablename+".ibd", space))
+        return ghost_pb2.APIResponse(responsemessage=space,
+                                        responsecode=0)
 
     def checkdefinition(self, request, context):
         schemaname = request.schemaname
@@ -49,6 +58,34 @@ class Listener(ghost_pb2_grpc.ghostServicer):
         cursor.close()
         cnx.close()
         return ghost_pb2.APIResponse(responsemessage=create_table,
+                                        responsecode=0)
+
+    def rowcount(self, request, context):
+        schemaname = request.schemaname
+        tablename  = request.tablename
+        print("schema name : %s , table name: %s" % (schemaname, tablename))
+        config = configparser.ConfigParser()
+        config.sections()
+        config.read('/etc/grpc-ghost/config.ini')
+        try:
+            cnx = mysql.connector.connect(user=config['DEFAULT']['user'], password=config['DEFAULT']['password'],
+                                  host='127.0.0.1',
+                                  database=schemaname)
+            cursor = cnx.cursor()
+            cursor.execute(
+                "SELECT TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s", (schemaname,tablename))
+            for (table_rows,) in cursor:
+                print("{}".format(table_rows))
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Please check user & password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exits")
+            else:
+                print(err)
+        cursor.close()
+        cnx.close()
+        return ghost_pb2.APIResponse(responsemessage=str(int(table_rows)),
                                         responsecode=0)
 
     def dryrun(self, request, context):

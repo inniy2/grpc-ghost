@@ -10,6 +10,8 @@ service ghost{
 	rpc execute(ghostRequest)                returns (stream APIMessage);
 	rpc executeNohup(ghostRequest)           returns (APIResponse);
 	rpc interactive(interactiveRequest)      returns (APIResponse);
+	rpc rowcount(definitionRequest)          returns (APIResponse);
+	rpc ibdsize(ibdRequest)                  returns (APIResponse);
 }
 
 message Empty{
@@ -31,6 +33,12 @@ message diskRequest{
 message definitionRequest{
 	string schemaname = 1;
 	string tablename = 2;
+}
+
+message ibdRequest{
+	string dir = 1;
+	string schemaname = 2;
+	string tablename = 3;
 }
 
 message ghostRequest{
